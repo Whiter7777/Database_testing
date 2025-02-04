@@ -6,7 +6,7 @@ from pages.forms.avatar_form import AvatarForm
 from pages.forms.cookies_form import CookiesForm
 from pages.forms.help_form import HelpForm
 from pages.forms.personal_details_form import PersonalDetailsForm
-from integration_template.configurations.test_data_configuration import TestDataConfiguration
+from integration_template.configurations.testing_data_configuration import TestDataConfiguration
 
 
 class GamePage(Form):
@@ -46,4 +46,4 @@ class GamePage(Form):
         return self.state.is_displayed()
 
     def check_timer(self):
-        return self.timer.text == TestDataConfiguration().get_timer()
+        return self.timer.text == TestDataConfiguration().get_test_data().timer

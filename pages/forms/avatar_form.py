@@ -42,10 +42,6 @@ class AvatarForm(Form):
         autoit.control_set_text(id_explorer_open, id_input_line, test_file)
         autoit.control_click(id_explorer_open, id_open_button)
 
-    # def check_unselect_checkbox(self):
-    #     if self.unselect_checkbox.check():
-    #         self.unselect_checkbox.click()
-
     def check_random_checkboxes(self):
         if self.unselect_checkbox.check():
             self.unselect_checkbox.click()

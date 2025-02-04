@@ -3,29 +3,25 @@ from tests.test_base import TestBase
 from pages.main_page import MainPage
 from pages.game_page import GamePage
 
-
 class TestUserInterface(TestBase):
     main_page = MainPage()
     game_page = GamePage()
 
-    def setup(self):
+    def setup_method(self):
         with allure.step("Go to main page"):
             self.go_to_start_page()
 
         with allure.step("Main page is displayed"):
             assert self.main_page.page_is_displayed()
-            # assert self.main_page.state.is_displayed()
 
         with allure.step("Click Next Page Button"):
             self.main_page.click_next_page_button()
 
         with allure.step("Game page is displayed"):
-            # assert self.game_page.state.is_displayed()
             assert self.game_page.page_is_displayed()
 
     def test_userinterface(self):
         with allure.step("Login form is displayed"):
-            # assert self.game_page.login_form.state.is_displayed()
             assert self.game_page.login_form.page_is_displayed()
 
         with allure.step("Enter user data"):
@@ -53,10 +49,9 @@ class TestUserInterface(TestBase):
             self.game_page.personal_details_form.page_is_displayed()
 
     def test_help_form(self):
-        self.setup()
+        self.setup_method()
 
         with allure.step("Help form is displayed"):
-            # assert self.game_page.help_form.state.wait_for_displayed()
             assert self.game_page.help_form.page_is_displayed()
 
         with allure.step("Click Send to Bottom Button"):
@@ -66,22 +61,19 @@ class TestUserInterface(TestBase):
             assert self.game_page.help_form.help_form_is_hidden()
 
     def test_cookies(self):
-        self.setup()
+        self.setup_method()
 
         with allure.step("Cookies form is displayed"):
-            # assert self.game_page.cookies_form.state.wait_for_displayed()
             assert self.game_page.cookies_form.page_is_displayed()
 
         with allure.step("Accept Cookies"):
             self.game_page.cookies_form.accept_cookies()
 
         with allure.step("Cookies form is not displayed"):
-            # assert self.game_page.cookies_form.state.wait_for_not_displayed()
             assert self.game_page.cookies_form.page_is_not_displayed()
 
-
     def test_timer(self):
-        self.setup()
+        self.setup_method()
 
         with allure.step("Timer is 00:00:00"):
             assert self.game_page.check_timer()

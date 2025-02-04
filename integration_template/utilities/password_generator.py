@@ -1,6 +1,6 @@
 import random
 from string import ascii_letters
-from integration_template.configurations.test_data_configuration import TestDataConfiguration
+from integration_template.configurations.testing_data_configuration import TestDataConfiguration
 
 
 class PasswordGenerator:
@@ -12,4 +12,4 @@ class PasswordGenerator:
         part_lat = "".join(random.choice(ascii_letters) for i in range(random.randint(3, 5)))
         part_cyr = "".join(random.choice(cyrillic_ansi) for i in range(random.randint(3, 5)))
         part_num = str(random.randint(1, 9))
-        return (part_lat+part_cyr+part_num+TestDataConfiguration().get_email()).title()
+        return (part_lat+part_cyr+part_num+TestDataConfiguration().get_test_data().email).title()

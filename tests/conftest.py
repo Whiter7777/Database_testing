@@ -28,7 +28,6 @@ def setup_session(request):
     BrowserServices.Instance.set_startup(CustomStartup())
     yield
 
-
 @pytest.fixture(scope="function", autouse=True)
 def setup_function(request: FixtureRequest):
     BrowserServices.Instance.browser.maximize()

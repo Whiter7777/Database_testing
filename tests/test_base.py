@@ -8,4 +8,3 @@ class TestBase:
     def go_to_start_page(self):
         BrowserServices.Instance.browser.go_to(Configuration.start_url())
         BrowserServices.Instance.browser.wait_for_page_to_load()
-

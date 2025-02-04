@@ -2,7 +2,7 @@ from py_selenium_auto.forms.form import Form
 from py_selenium_auto_core.locator.locator import Locator
 from selenium.webdriver.common.by import By
 from integration_template.utilities.password_generator import PasswordGenerator
-from integration_template.configurations.test_data_configuration import TestDataConfiguration
+from integration_template.configurations.testing_data_configuration import TestDataConfiguration
 from py_selenium_auto.elements.button import Button
 import random
 
@@ -35,8 +35,8 @@ class LoginForm(Form):
 
     def enter_user_data(self):
         self.password_input.clear_and_type(PasswordGenerator().generate_password())
-        self.email_input.clear_and_type(TestDataConfiguration.get_email())
-        self.domain_input.clear_and_type(TestDataConfiguration.get_domain())
+        self.email_input.clear_and_type(TestDataConfiguration().get_test_data().email)
+        self.domain_input.clear_and_type(TestDataConfiguration().get_test_data().domain)
         self.dropdown_opener.click()
         dropdown_list = self._element_factory.find_elements(
             Button,
