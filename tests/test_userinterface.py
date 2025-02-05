@@ -77,3 +77,4 @@ class TestUserInterface(TestBase):
 
         with allure.step("Timer is 00:00:00"):
             assert self.game_page.check_timer()
+
