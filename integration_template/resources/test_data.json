@@ -1,5 +1,9 @@
 {
-  "email": "simple",
-  "domain": "mail",
-  "timer": "00:00:00"
+  "timer_start_value": "00:00:00",
+  "lat_letters_quant_in_range": [3, 5],
+  "cyr_letters_quant_in_range": [3, 5],
+  "email_letters_quant_in_range": [5, 6],
+  "domain_letters_quant_in_range": [4, 5],
+  "digit_quant_in_range": [1, 9],
+  "number_selected_checkboxes": 3
 }

@@ -7,10 +7,10 @@ class MainPage(Form):
     def __init__(self):
         super().__init__(Locator(By.XPATH, "//*[contains(@class, 'start view')]"), "Main Page")
         self.next_page_button = self._element_factory.get_button(
-            Locator(By.XPATH, "//*[@class='start__link']"),
+            Locator(By.CLASS_NAME, "start__link"),
             "Next Page Button")
 
-    def page_is_displayed(self):
+    def is_page_displayed(self):
         return self.state.is_displayed()
 
     def click_next_page_button(self):
