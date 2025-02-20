@@ -34,3 +34,7 @@ class GetRandomData:
     def generate_random_text(num_min_max: tuple[int, int]):
         return "".join(random.choice(ascii_letters) for i in range(
             random.randint(num_min_max[0], num_min_max[1])))
+
+    @staticmethod
+    def generate_random_number(num_min_max: tuple[int, int]):
+        return random.randint(num_min_max[0], num_min_max[1])

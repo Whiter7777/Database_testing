@@ -5,6 +5,8 @@ from pages.game_page import GamePage
 from integration_template.utilities.get_random_data import GetRandomData
 from integration_template.utilities.upload_file_to_explorer import UploadFile
 from integration_template.configurations.testing_data_configuration import TestDataConfiguration
+import pytest
+from integration_template.utilities.get_tests_for_cloning import GetTestsForCloning
 
 
 class TestUserInterface(TestBase):
@@ -15,7 +17,7 @@ class TestUserInterface(TestBase):
         with allure.step("Go to main page"):
             self.go_to_start_page()
 
-    def test_fill_in_the_forms(self):
+    def test_fill_in_the_forms(self, get_new_record):
         with allure.step("Main page is displayed"):
             assert self.main_page.is_page_displayed()
 
@@ -74,7 +76,7 @@ class TestUserInterface(TestBase):
         with allure.step("Personal Details Form id displayed"):
             self.game_page.personal_details_form.is_page_displayed()
 
-    def test_hide_help_form(self):
+    def test_hide_help_form(self, get_new_record):
         self.setup_method()
 
         with allure.step("Main page is displayed"):
@@ -95,7 +97,7 @@ class TestUserInterface(TestBase):
         with allure.step("Help Form is hidden"):
             assert self.game_page.help_form.is_help_form_hidden()
 
-    def test_accept_cookies(self):
+    def test_accept_cookies(self, get_new_record):
         self.setup_method()
 
         with allure.step("Main page is displayed"):
@@ -116,7 +118,7 @@ class TestUserInterface(TestBase):
         with allure.step("Cookies form is not displayed"):
             assert self.game_page.cookies_form.is_page_not_displayed()
 
-    def test_timer_start_value(self):
+    def test_timer_start_value(self, get_new_record):
         self.setup_method()
 
         with allure.step("Main page is displayed"):
@@ -132,3 +134,8 @@ class TestUserInterface(TestBase):
             assert self.game_page.check_timer(
                 TestDataConfiguration().get_test_data().timer_start_value
             )
+
+    @pytest.mark.parametrize("id", GetTestsForCloning().get_test_id_for_cloning())
+    def test_generate_random_status(self, get_copy_record, id):
+        assert GetRandomData().generate_random_number(
+            TestDataConfiguration().get_test_data().digit_quant_in_range) % 2 == 0

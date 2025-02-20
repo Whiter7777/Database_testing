@@ -1,3 +1,13 @@
 {
-  "startUrl": "https://userinyerface.com/"
+  "startUrl": "https://userinyerface.com/",
+  "env": "BELOZYOROVP",
+  "project": {
+    "name": "SaveGothem"
+  },
+  "session": "1476333140323",
+  "author": {
+    "name": "Bruce",
+    "login": "batman",
+    "email": "i_am@batman.com"
+  }
 }
