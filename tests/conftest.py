@@ -74,7 +74,7 @@ def get_new_record(request: FixtureRequest):
                         Configuration().get_config_data().project.name),
                     'session_id': MySQLDatabase().read_id_from_table_by_column_name(
                         TestDataConfiguration().get_test_data().session_table.table_name,
-                        TestDataConfiguration.get_test_data().session_table.column_name,
+                        TestDataConfiguration().get_test_data().session_table.column_name,
                         Configuration().get_config_data().session),
                     'start_time': datetime.fromtimestamp(request.node.report.start),
                     'end_time': datetime.fromtimestamp(request.node.report.stop),
@@ -122,6 +122,6 @@ def get_copy_record(request: FixtureRequest, id: int):
 
 @pytest.hookimpl()
 def pytest_sessionfinish(session):
-    MySQLDatabase().delete_record(TestDataConfiguration.get_test_data().test_table.table_name,
-                                  TestDataConfiguration.get_test_data().test_table.condition,
+    MySQLDatabase().delete_record(TestDataConfiguration().get_test_data().test_table.table_name,
+                                  TestDataConfiguration().get_test_data().test_table.condition,
                                   [record_id])
