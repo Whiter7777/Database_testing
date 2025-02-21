@@ -16,5 +16,3 @@ class TestUserInterfaceModel(BaseModel):
     status_table: StatusTable
     session_table: SessionTable
     test_table: TestTable
-
-

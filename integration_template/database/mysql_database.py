@@ -102,5 +102,3 @@ class MySQLDatabase:
         self._execute_query_dict(delete_query, value)
         self._connect_db.commit()
         self._closing_connection()
-
-
