@@ -6,26 +6,5 @@
   "domain_letters_quant_in_range": [4, 5],
   "digit_quant_in_range": [1, 9],
   "number_selected_checkboxes": 3,
-  "limit": 10,
-  "author_table": {
-    "table_name": "author",
-    "column_name": "name"
-  },
-  "project_table": {
-    "table_name": "project",
-    "column_name": "name"
-  },
-  "status_table": {
-    "table_name": "status",
-    "column_name": "name"
-  },
-  "session_table": {
-    "table_name": "session",
-    "column_name": "session_key"
-  },
-  "test_table": {
-    "table_name": "test",
-    "column_name": "status_id",
-    "condition": "id"
-  }
+  "limit": 10
 }

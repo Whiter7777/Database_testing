@@ -9,7 +9,11 @@ from integration_template.browsers.custom_startup import CustomStartup
 from datetime import datetime
 from integration_template.database.mysql_database import MySQLDatabase
 from integration_template.configurations.configuration import Configuration
-from integration_template.configurations.testing_data_configuration import TestDataConfiguration
+from integration_template.models.author_model import AuthorModel
+from integration_template.models.project_model import ProjectModel
+from integration_template.models.status_model import StatusModel
+from integration_template.models.session_model import SessionModel
+from integration_template.models.test_model import TestModel
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -50,71 +54,68 @@ def pytest_runtest_makereport(item):
 
 @pytest.fixture(scope="function")
 def get_new_record(request: FixtureRequest):
-    if MySQLDatabase().is_field_in_table(TestDataConfiguration().get_test_data().author_table.table_name,
-                                         TestDataConfiguration().get_test_data().author_table.column_name,
+    if MySQLDatabase().is_field_in_table(AuthorModel().table_name,
+                                         AuthorModel().column_name,
                                          Configuration().get_config_data().author.name) is False:
-        MySQLDatabase().create_record(Configuration().get_config_data().author.model_dump(),
-                                      TestDataConfiguration().get_test_data().author_table.table_name)
+        MySQLDatabase().insert_record(Configuration().get_config_data().author.model_dump(),
+                                      AuthorModel().table_name)
 
-    if MySQLDatabase().is_field_in_table(TestDataConfiguration().get_test_data().project_table.table_name,
-                                         TestDataConfiguration().get_test_data().project_table.column_name,
+    if MySQLDatabase().is_field_in_table(ProjectModel().table_name,
+                                         ProjectModel().column_name,
                                          Configuration().get_config_data().project.name) is False:
-        MySQLDatabase().create_record(Configuration().get_config_data().project.model_dump(),
-                                      TestDataConfiguration().get_test_data().project_table.table_name)
+        MySQLDatabase().insert_record(Configuration().get_config_data().project.model_dump(),
+                                      ProjectModel().table_name)
     yield
     new_instance = {'name': request.node.report.nodeid,
-                    'status_id': MySQLDatabase().read_id_from_table_by_column_name(
-                        TestDataConfiguration().get_test_data().status_table.table_name,
-                        TestDataConfiguration().get_test_data().status_table.column_name,
+                    'status_id': MySQLDatabase().get_id_from_table_by_column_name(
+                        StatusModel().table_name,
+                        StatusModel().column_name,
                         request.node.report.outcome),
                     'method_name': request.node.name,
-                    'project_id': MySQLDatabase().read_id_from_table_by_column_name(
-                        TestDataConfiguration().get_test_data().project_table.table_name,
-                        TestDataConfiguration().get_test_data().project_table.column_name,
+                    'project_id': MySQLDatabase().get_id_from_table_by_column_name(
+                        ProjectModel().table_name,
+                        ProjectModel().column_name,
                         Configuration().get_config_data().project.name),
-                    'session_id': MySQLDatabase().read_id_from_table_by_column_name(
-                        TestDataConfiguration().get_test_data().session_table.table_name,
-                        TestDataConfiguration().get_test_data().session_table.column_name,
+                    'session_id': MySQLDatabase().get_id_from_table_by_column_name(
+                        SessionModel().table_name,
+                        SessionModel().column_name,
                         Configuration().get_config_data().session),
                     'start_time': datetime.fromtimestamp(request.node.report.start),
                     'end_time': datetime.fromtimestamp(request.node.report.stop),
                     'env': Configuration().get_config_data().env,
                     'browser': BrowserServices.Instance.browser.browser_name,
-                    'author_id': MySQLDatabase().read_id_from_table_by_column_name(
-                        TestDataConfiguration().get_test_data().author_table.table_name,
-                        TestDataConfiguration().get_test_data().author_table.column_name,
+                    'author_id': MySQLDatabase().get_id_from_table_by_column_name(
+                        AuthorModel().table_name,
+                        AuthorModel().column_name,
                         Configuration().get_config_data().author.name)
                     }
-    MySQLDatabase().create_record(new_instance,
-                                  TestDataConfiguration().get_test_data().test_table.table_name)
+    MySQLDatabase().insert_record(new_instance,
+                                  TestModel().table_name)
     global record_id
-    record_id = MySQLDatabase().read_last_insert_record_id(
-        TestDataConfiguration().get_test_data().test_table.table_name)
+    record_id = MySQLDatabase().get_last_insert_record_id(TestModel().table_name)
 
 
 @pytest.fixture(scope="function")
 def get_copy_record(request: FixtureRequest, id: int):
     yield
     MySQLDatabase().copy_record_by_id(id,
-                                      TestDataConfiguration().get_test_data().test_table.table_name,
-                                      MySQLDatabase().read_id_from_table_by_column_name(
-                                          TestDataConfiguration().get_test_data().author_table.table_name,
-                                          TestDataConfiguration().get_test_data().author_table.column_name,
+                                      TestModel().table_name,
+                                      MySQLDatabase().get_id_from_table_by_column_name(
+                                          AuthorModel().table_name,
+                                          AuthorModel().column_name,
                                           Configuration().get_config_data().author.name),
-                                      MySQLDatabase().read_id_from_table_by_column_name(
-                                          TestDataConfiguration().get_test_data().project_table.table_name,
-                                          TestDataConfiguration().get_test_data().project_table.column_name,
+                                      MySQLDatabase().get_id_from_table_by_column_name(
+                                          ProjectModel().table_name,
+                                          ProjectModel().column_name,
                                           Configuration().get_config_data().project.name))
-    new_record_id = MySQLDatabase().read_last_insert_record_id(
-        TestDataConfiguration().get_test_data().test_table.table_name)
+    new_record_id = MySQLDatabase().get_last_insert_record_id(TestModel().table_name)
     new_status = request.node.report.outcome
     MySQLDatabase().update_record_by_id(new_record_id,
-                                        TestDataConfiguration().get_test_data().test_table.table_name,
-                                        TestDataConfiguration().get_test_data().test_table.column_name,
-
-                                        MySQLDatabase().read_id_from_table_by_column_name(
-                                            TestDataConfiguration().get_test_data().status_table.table_name,
-                                            TestDataConfiguration().get_test_data().status_table.column_name,
+                                        TestModel().table_name,
+                                        TestModel().column_name,
+                                        MySQLDatabase().get_id_from_table_by_column_name(
+                                            StatusModel().table_name,
+                                            StatusModel().column_name,
                                             new_status
                                             )
                                         )
@@ -122,6 +123,7 @@ def get_copy_record(request: FixtureRequest, id: int):
 
 @pytest.hookimpl()
 def pytest_sessionfinish(session):
-    MySQLDatabase().delete_record(TestDataConfiguration().get_test_data().test_table.table_name,
-                                  TestDataConfiguration().get_test_data().test_table.condition,
-                                  [record_id])
+    MySQLDatabase().delete_record_by_condition(TestModel().table_name,
+                                               TestModel().condition,
+                                               [record_id])
+    MySQLDatabase().closing_connection()

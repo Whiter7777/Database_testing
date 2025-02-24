@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 
 
-class ProjectModel(BaseModel):
-    table_name: str = "project"
+class StatusModel(BaseModel):
+    table_name: str = "status"
     column_name: str = "name"
     name: str = None
