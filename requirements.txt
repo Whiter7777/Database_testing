@@ -8,3 +8,4 @@ py-selenium-auto==0.4.7
 pytest-xdist==3.5.0
 PyAutoIt==0.6.5
 pydantic==2.10.6
+mysql-connector-python~=9.2.0
